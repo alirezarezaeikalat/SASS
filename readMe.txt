@@ -72,6 +72,49 @@ ul{
       margin-right: 0;
     } 
   }
-to include it:
-  
+
+to include mixin with arguments:
   @include grid(6, 4%);
+
+10. There are lot of sass functions that we can 
+    use, for example lighten() and complement():
+     
+        &:hover: lighten($color, $amount);
+        &:hover: lighten(#aaa, 10);
+        &:hover: complement($deepBlue);
+
+11. We can use @content to make template but
+let defining inside the template later:
+
+    @mixin mq($width){
+      @media screen and (max-width: $width){
+        @content;
+      }
+    }
+
+  and to use it the inside will go to 
+  content part:
+      li{
+        @include mq(600px){
+          width: 100%; 
+        }
+      }
+
+12. We can use @if in sass and rest operator:
+
+    @mixin mq($arg...){
+      @if length($arg) == 1{
+        @media screen and(max-width: nth($arg , 1)) {
+          @content;
+        }
+      }
+      @if length($arg) == 2{
+        @media screen and(max-width: nth($arg , 1)) and (min-width: nth($arg, 2)) {
+          @content;
+        }
+      } 
+    }
+to use it :
+@include mq(2000px, 800px)
+
+
